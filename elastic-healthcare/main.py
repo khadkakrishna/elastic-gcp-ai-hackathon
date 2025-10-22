@@ -7,15 +7,15 @@ sidebar.sidebar()
 st.title("🩺 Elastic Healthcare")
 st.markdown(
    """
-   Smarter Insights for Better Care.
-   Enter your name in the text box below and press a button to see some fun features in Streamlit.
+   ### Smarter Insights for Better Care.
+   
+   Enter your query in the text box below and click on the button you want to get results for.
    """
 )
 
-name = st.text_input("Enter your name please:")
+name = st.text_input("Enter your query please:")
 
 
-# Use columns to create buttons side by side
 col1, col2 = st.columns(2)
 
 ans = ""

@@ -1,0 +1,3 @@
+[submodule "MedQuAD"]
+	path = MedQuAD
+	url = git@github.com:abachaa/MedQuAD.git

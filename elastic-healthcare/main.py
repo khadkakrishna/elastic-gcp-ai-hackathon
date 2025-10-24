@@ -23,7 +23,7 @@ pages = {
         st.Page("_pages/vertex_ai_grounding.py", title="Vertex AI Grounding Source"),
         ],    
     "Observability": [
-        st.Page("_pages/observability.py", title="Observability"),
+        st.Page("_pages/observability.py", title="Metrics Dashboard"),
         ],
 }
 

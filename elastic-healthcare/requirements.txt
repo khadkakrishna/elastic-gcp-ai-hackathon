@@ -1,1 +1,7 @@
 streamlit==1.47.1
+elasticsearch
+google-api-core
+google-ai-generativelanguage
+google-generativeai
+google-genai
+dotenv

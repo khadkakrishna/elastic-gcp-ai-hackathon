@@ -31,32 +31,49 @@ def get_embedding(text):
         contents=text)
     return result.embeddings[0].values
 
-
-
-
-def get_answers_from_elasticsearch(query_text, k, num_candidates):
-    INDEX_NAME = "medquad_index_with_embeddings_gemini"
+def get_answers_from_elasticsearch(query_text, k, num_candidates, multilingual_enabled, language_code=None):
     # query_text = "Treatments for Parkinson disease?"
-
-    query_embedding = client.models.embed_content(
-        model="gemini-embedding-001",
-        contents=query_text
-    ).embeddings[0].values 
-
-    query_vector_json = json.dumps(query_embedding) 
-
-    resp = es.search_template(
-        index=INDEX_NAME,
-        body={
-            "id": "knn_search_template",
-            "params": {
-                "query_vector": query_vector_json,
-                "k": k,
-                "num_candidates": num_candidates
-            }
+    if multilingual_enabled:
+        INDEX_NAME = "medquad_index_with_embeddings_gemini_multilingual"
+        knn = {
+            "field": "answer_embedding",
+            "query_vector": get_embedding(query_text),
+            "k": k,
+            "num_candidates": num_candidates,
         }
-    )
-    return resp
+
+        if language_code:
+            knn["filter"] = {
+                "term": {
+                    "language": language_code,
+                }
+            }
+            
+        res =  es.search(index=INDEX_NAME, knn=knn)
+        return res
+
+    else:
+        INDEX_NAME = "medquad_index_with_embeddings_gemini"
+
+        query_embedding = client.models.embed_content(
+            model="gemini-embedding-001",
+            contents=query_text
+        ).embeddings[0].values 
+
+        query_vector_json = json.dumps(query_embedding) 
+
+        resp = es.search_template(
+            index=INDEX_NAME,
+            body={
+                "id": "knn_search_template",
+                "params": {
+                    "query_vector": query_vector_json,
+                    "k": k,
+                    "num_candidates": num_candidates
+                }
+            }
+        )
+        return resp
 
 
 def get_response_from_vertex_ai(query_text, model="gemini-2.5-flash"):

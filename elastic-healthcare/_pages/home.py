@@ -1,26 +1,17 @@
 import streamlit as st
-from PIL import Image
 
-# --- PAGE CONFIG ---
 st.set_page_config(
     page_title="Elastic HealthCare",
-    page_icon="🩺",
     layout="wide",
 )
 
-# --- HEADER SECTION ---
-st.title("Elastic HealthCare 🩺")
-st.subheader("Smarter Insights. Better Care.")
+st.markdown("## Verified medical answers, Trusted by doctors, powered by AI 🩺")
 st.write(
     "Elastic HealthCare is an AI-powered healthcare intelligence platform that combines "
     "Google Cloud Vertex AI and Elasticsearch to bring real-time, multimodal, and multilingual insights "
     "from structured and unstructured healthcare data."
 )
 
-# --- IMAGE / BANNER ---
-# st.image("_pages/assets/banner.png", use_container_width=True)
-
-# --- FEATURE HIGHLIGHTS ---
 st.markdown("### Key Features ✨")
 
 cols = st.columns(3)
@@ -45,9 +36,20 @@ with cols[2]:
     - ☁️ **Google Cloud Integration**  
       Vertex AI, GCS, and Elastic Cloud working together.
     """)
+    
 
+st.divider()
+st.markdown("#### 💡 Try asking one of these questions:")
 
-# --- FOOTER ---
-st.markdown("---")
-st.caption("Built with ❤️ using Elasticsearch, Vertex AI (Gemini), and Streamlit.")
-st.caption("© 2025 Elastic HealthCare | Hackathon Edition")
+suggestions = [
+    "what are symptoms of book syndrome?",
+    "Can u tell me about Gliomatosis cerebri?",
+    "Is Glass-Chapman-Hockley syndrome inherited?",
+    "Can u tell me more about Aarskog-Scott syndrome?",
+    "What are the treatments for Chronic Fatigue Syndrome (CFS)?"
+]
+
+for i in suggestions:
+    st.markdown(f"- {i}")
+
+st.divider()

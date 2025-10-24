@@ -1,8 +1,14 @@
 import streamlit as st
 import sidebar
-import utils
 
 sidebar.sidebar()
+
+st.set_page_config(
+    page_title="Elastic HealthCare", 
+    page_icon="assets/logo.jpeg", 
+    layout="wide" 
+)
+
 
 pages = {
    "Home": [
@@ -11,6 +17,7 @@ pages = {
     "Elasticsearch": [
         st.Page("_pages/search_documents.py", title="Search from Knowledge Base"),
         st.Page("_pages/insert_documents.py", title="Insert into Knowledge Base"),
+        st.Page("_pages/rerank_documents.py", title="Reranking Documents"),
         ],
     "Vertex AI": [
         st.Page("_pages/vertex_ai_grounding.py", title="Vertex AI Grounding Source"),

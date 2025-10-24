@@ -15,7 +15,7 @@ question = st.text_input("Enter your question:")
 # Model selection
 model_name = st.selectbox(
     "Select Vertex AI Model",
-    options=["gemini-2.5-flash", "gemini-1.5-pro", "custom-model-1"],
+    options=["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.5-pro"],
     index=0,  # Default is gemini-2.5-flash
     help="Choose the model to use for generating answers."
 )

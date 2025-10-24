@@ -109,3 +109,35 @@ def get_response_from_vertex_ai(query_text, model="gemini-2.5-flash"):
         ),
     )
     return response
+
+
+def rerank_documents(index_name: str, query_text: str, rank_window_size: int = 10, min_score: float = 0.6):
+    """
+    Perform reranking search using Vertex AI inference reranker.
+    """
+    try:
+        body = {
+            "retriever": {
+                "text_similarity_reranker": {
+                    "retriever": {
+                        "standard": {
+                            "query": {
+                                "match": {"answer": query_text}  # base retriever query
+                            }
+                        }
+                    },
+                    "field": "answer",
+                    "rank_window_size": rank_window_size,
+                    "inference_id": "googlevertexai_rerank",
+                    "inference_text": query_text,
+                    "min_score": min_score,
+                }
+            }
+        }
+
+        response = es.search(index=index_name, body=body)
+        return response
+
+    except Exception as e:
+        print(f"Elasticsearch reranking error: {e}")
+        return None

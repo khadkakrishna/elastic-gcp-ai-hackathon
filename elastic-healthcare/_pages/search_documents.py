@@ -9,10 +9,8 @@ st.markdown(
    """
 )
 
-# Query input
 name = st.text_input("Enter your query please:")
 
-# Multilingual toggle
 multilingual = st.toggle("Enable Multilingual Support", value=False)
 language_code = None
 if multilingual:
@@ -21,7 +19,6 @@ if multilingual:
         options=["English", "German", "French", "Spanish", "Italian"],
         index=0
     )
-    # Convert to two-letter ISO codes
     lang_map = {
         "English": "en",
         "German": "de",
@@ -31,7 +28,6 @@ if multilingual:
     }
     language_code = lang_map.get(lang, "en")
 
-# Parameters
 k = st.slider("Select top-k results:", min_value=1, max_value=10, value=3, step=1)
 num_candidates = st.number_input("Number of candidates to consider:", min_value=1, value=10, step=1)
 
@@ -56,6 +52,6 @@ if col1.button("Get answers from Elasticsearch!"):
                 "Answer": hit["_source"].get("answer", "")
             })
         
-        st.json(results)  # Display results as JSON
+        st.json(results)
     else:
         st.info("No results found.")

@@ -9,14 +9,12 @@ st.markdown(
     """
 )
 
-# Query input
 question = st.text_input("Enter your question:")
 
-# Model selection
 model_name = st.selectbox(
     "Select Vertex AI Model",
     options=["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.5-pro"],
-    index=0,  # Default is gemini-2.5-flash
+    index=0, 
     help="Choose the model to use for generating answers."
 )
 
@@ -47,9 +45,9 @@ if col1.button("Get response from Vertex AI"):
                 
                 if grounding_docs and len(grounding_docs) > 0:
                     st.subheader("📚 Grounding Documents")
-                    for doc in grounding_docs[:5]:  # show only first 5
-                        truncated = " ".join(doc.split()[:5]) + "…"  # first 5 words
-                        escaped_doc = html.escape(doc)  # escape special characters
+                    for doc in grounding_docs[:5]: 
+                        truncated = " ".join(doc.split()[:5]) + "…"  
+                        escaped_doc = html.escape(doc)
                         st.markdown(
                             f'- <a href="#{escaped_doc}" style="color:blue" target="_blank" title="{escaped_doc}">{truncated}</a>',
                             unsafe_allow_html=True

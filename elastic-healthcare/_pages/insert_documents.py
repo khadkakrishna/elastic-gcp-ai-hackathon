@@ -7,7 +7,6 @@ import uuid
 
 load_dotenv()
 
-# --- Initialize clients ---
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
 es = Elasticsearch(
@@ -21,13 +20,10 @@ st.set_page_config(page_title="Insert Q&A", layout="wide")
 st.markdown("### 📝 Add Question & Answer to Knowledge Base")
 st.markdown("Enter a **question** and **answer**, and optionally fill additional metadata.")
 
-# --- Form for input ---
 with st.form(key="qa_form"):
-    # Required fields
     question = st.text_area("Question *", help="This field is required")
     answer = st.text_area("Answer *", help="This field is required")
 
-    # Optional fields inside an expander
     with st.expander("Optional Metadata"):
         document_id = st.text_input("Document ID (optional)")
         source = st.text_input("Source")
@@ -47,7 +43,6 @@ if submitted:
         st.error("❌ Question and Answer are required fields.")
     else:
         try:
-            # --- Generate embeddings ---
             question_emb = client.models.embed_content(
                 model="gemini-embedding-001",
                 contents=question
@@ -77,7 +72,6 @@ if submitted:
                 "answer_embedding": answer_emb
             }
 
-            # --- Index into Elasticsearch ---
             es.index(index=INDEX_NAME, document=doc)
             st.success(f"✅ Q&A added successfully! Document ID: {doc['document_id']}")
 
